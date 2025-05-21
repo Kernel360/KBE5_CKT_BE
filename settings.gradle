@@ -1,0 +1,4 @@
+rootProject.name = 'ckt-be'
+
+include 'ckt-core'
+include 'ckt-admin'
