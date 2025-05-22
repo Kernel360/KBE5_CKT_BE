@@ -1,3 +1,17 @@
 spring:
   application:
     name: ckt-admin
+
+  datasource:
+    url: ${LOCAL_DB_URL}
+    username: ${LOCAL_DB_USERNAME}
+    password: ${LOCAL_DB_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    hibernate.naming.physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    open-in-view: false
+    properties.hibernate:
+      default_batch_fetch_size: 1000
+      globally_quoted_identifiers: true
