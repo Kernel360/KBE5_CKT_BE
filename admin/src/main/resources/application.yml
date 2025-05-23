@@ -1,6 +1,6 @@
 spring:
   application:
-    name: ckt-admin
+    name: admin
 
   datasource:
     url: jdbc:mysql://${DB_URL}:${DB_PORT}/${DB_DATABASE}

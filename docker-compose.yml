@@ -16,7 +16,7 @@ services:
 
   admin:
     build:
-      context: ./ckt-admin
+      context: ./admin
     depends_on:
       - db
     environment:
