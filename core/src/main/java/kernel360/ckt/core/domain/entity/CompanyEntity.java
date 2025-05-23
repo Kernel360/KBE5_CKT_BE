@@ -5,10 +5,9 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 
-@ToString
 @Getter
 @Builder
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Table(name = "company")
 @Entity
