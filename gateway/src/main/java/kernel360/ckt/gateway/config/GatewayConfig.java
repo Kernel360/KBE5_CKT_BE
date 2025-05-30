@@ -21,7 +21,7 @@ public class GatewayConfig {
             .route("auth", r -> r.path("/api/v1/auth/**")
                 .uri("http://auth:8082"))
 
-            .route("admin", r -> r.path("/api/v1/admin/**")
+            .route("admin", r -> r.path("/api/v1/companies/**")
             .uri("http://admin:8080"))
 
             .build();
