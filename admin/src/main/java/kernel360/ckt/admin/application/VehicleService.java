@@ -49,7 +49,15 @@ public class VehicleService {
             .orElseThrow(() -> new EntityNotFoundException("Vehicle not found with id: " + vehicleId));
     }
 
+//    public void delete(Long vehicleId) {
+//        vehicleRepository.deleteById(vehicleId)
+//            .orElseThrow(() -> new EntityNotFoundException("Vehicle not found with id: " + vehicleId);
+//    }
+
     public void delete(Long vehicleId) {
+        if (vehicleRepository.findById(vehicleId).isEmpty()) {
+            throw new EntityNotFoundException("Vehicle not found with id: " + vehicleId);
+        }
         vehicleRepository.deleteById(vehicleId);
     }
 }
