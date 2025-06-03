@@ -29,6 +29,9 @@ public class GatewayConfig {
             .route("vehicle", r -> r.path("/api/v1/vehicles/**")
                 .uri("http://admin:8080"))
 
+            .route("logs", r -> r.path("/api/v1/logs/**")
+                .uri("http://admin:8080"))
+
             .build();
     }
 }
