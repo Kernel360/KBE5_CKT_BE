@@ -45,7 +45,7 @@ public class VehicleEntity {
 
     @Enumerated(EnumType.STRING)
     @Column
-    private VehicleControlTowerStatus ControlTowerstatus;
+    private VehicleControlTowerStatus controlTowerstatus;
 
     @Lob
     private String memo;

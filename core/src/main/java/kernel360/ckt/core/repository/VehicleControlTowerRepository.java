@@ -12,10 +12,10 @@ public interface VehicleControlTowerRepository {
     @Query("SELECT COUNT(v) FROM VehicleEntity v")
     long countAll();
 
-    @Query("SELECT COUNT(v) FROM VehicleEntity v WHERE v.ControlTowerstatus = :status")
+    @Query("SELECT COUNT(v) FROM VehicleEntity v WHERE v.controlTowerstatus = :status")
     long countByStatus(@Param("status") VehicleControlTowerStatus status);
 
-    @Query("SELECT v FROM VehicleEntity v WHERE v.ControlTowerstatus = :status")
+    @Query("SELECT v FROM VehicleEntity v WHERE v.controlTowerstatus = :status")
     List<VehicleEntity> findByControlTowerStatus(@Param("status") VehicleControlTowerStatus status);
 
 }
