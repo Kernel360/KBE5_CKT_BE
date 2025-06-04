@@ -1,6 +1,7 @@
 package kernel360.ckt.core.domain.entity;
 
 import jakarta.persistence.*;
+import kernel360.ckt.core.domain.enums.VehicleControlTowerStatus;
 import kernel360.ckt.core.domain.enums.VehicleStatus;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -41,6 +42,10 @@ public class VehicleEntity {
     @Enumerated(EnumType.STRING)
     @Column
     private VehicleStatus status;
+
+    @Enumerated(EnumType.STRING)
+    @Column
+    private VehicleControlTowerStatus ControlTowerstatus;
 
     @Lob
     private String memo;
