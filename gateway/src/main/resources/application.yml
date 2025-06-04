@@ -3,11 +3,10 @@ server:
 
 spring:
   profiles:
-    active: local # 기본 프로파일은 local
+    active: local
 
   cloud:
     gateway:
-      # 각 profile에서 route만 분기되므로 여긴 공통 설정만 유지
       globalcors:
         corsConfigurations:
           '[/**]':
