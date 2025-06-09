@@ -22,7 +22,11 @@ public interface RouteJpaRepository extends Repository<RouteEntity, Long> {
             COUNT(DISTINCT DATE(r.start_at)) AS drivingDays,
             SUM(r.total_distance) AS totalDistance,
             AVG(r.total_distance) AS averageDistance,
-            SEC_TO_TIME(AVG(TIMESTAMPDIFF(SECOND, r.start_at, r.end_at))) AS averageDrivingTime
+            CONCAT(
+                LPAD(FLOOR(AVG(TIMESTAMPDIFF(SECOND, r.start_at, r.end_at)) / 3600), 2, '0'), ':',
+                LPAD(FLOOR(MOD(AVG(TIMESTAMPDIFF(SECOND, r.start_at, r.end_at)), 3600) / 60), 2, '0'), ':',
+                LPAD(MOD(AVG(TIMESTAMPDIFF(SECOND, r.start_at, r.end_at)), 60), 2, '0')
+            ) AS averageDrivingTime
         FROM route r
         LEFT JOIN driving_log dl ON r.driving_log_id = dl.id
         LEFT JOIN rental rent ON dl.rental_id = rent.id
@@ -51,7 +55,11 @@ public interface RouteJpaRepository extends Repository<RouteEntity, Long> {
             MIN(DATE(r.start_at)) AS startDate,
             MAX(DATE(r.start_at)) AS endDate,
             SUM(r.total_distance) AS totalDistance,
-            SEC_TO_TIME(SUM(TIMESTAMPDIFF(SECOND, r.start_at, r.end_at))) AS totalDrivingTime,
+            CONCAT(
+                LPAD(FLOOR(SUM(TIMESTAMPDIFF(SECOND, r.start_at, r.end_at)) / 3600), 2, '0'), ':',
+                LPAD(FLOOR(MOD(SUM(TIMESTAMPDIFF(SECOND, r.start_at, r.end_at)), 3600) / 60), 2, '0'), ':',
+                LPAD(MOD(SUM(TIMESTAMPDIFF(SECOND, r.start_at, r.end_at)), 60), 2, '0')
+            ) AS totalDrivingTime,
             COUNT(DISTINCT DATE(r.start_at)) AS drivingDays
         FROM route r
         JOIN driving_log dl ON r.driving_log_id = dl.id
@@ -74,7 +82,11 @@ public interface RouteJpaRepository extends Repository<RouteEntity, Long> {
     SELECT
         DATE(r.start_at) AS drivingDate,
         SUM(r.total_distance) AS totalDistance,
-        SEC_TO_TIME(SUM(TIMESTAMPDIFF(SECOND, r.start_at, r.end_at))) AS totalDrivingTime
+        CONCAT(
+            LPAD(FLOOR(SUM(TIMESTAMPDIFF(SECOND, r.start_at, r.end_at)) / 3600), 2, '0'), ':',
+            LPAD(FLOOR(MOD(SUM(TIMESTAMPDIFF(SECOND, r.start_at, r.end_at)), 3600) / 60), 2, '0'), ':',
+            LPAD(MOD(SUM(TIMESTAMPDIFF(SECOND, r.start_at, r.end_at)), 60), 2, '0')
+        ) AS totalDrivingTime
     FROM route r
     JOIN driving_log dl ON r.driving_log_id = dl.id
     JOIN rental rent ON dl.rental_id = rent.id
