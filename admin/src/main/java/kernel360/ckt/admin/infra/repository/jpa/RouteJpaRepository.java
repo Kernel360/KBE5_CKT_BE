@@ -16,26 +16,29 @@ public interface RouteJpaRepository extends Repository<RouteEntity, Long> {
     // 차량 운행 통계
     @Query(
         value = """
-        SELECT
-            v.registration_number AS registrationNumber,
-            c.name AS companyName,
-            COUNT(DISTINCT DATE(r.start_at)) AS drivingDays,
-            SUM(r.total_distance) AS totalDistance,
-            AVG(r.total_distance) AS averageDistance,
-            SEC_TO_TIME(AVG(TIMESTAMPDIFF(SECOND, r.start_at, r.end_at))) AS averageDrivingTime
-        FROM route r
-        LEFT JOIN driving_log dl ON r.driving_log_id = dl.id
-        LEFT JOIN rental rent ON dl.rental_id = rent.id
-        LEFT JOIN vehicle v ON rent.vehicle_id = v.id
-        LEFT JOIN company c ON rent.company_id = c.id
-        LEFT JOIN customer cu ON rent.customer_id = cu.id
-        WHERE r.start_at BETWEEN :startDate AND :endDate
-          AND (:registrationNumber IS NULL OR :registrationNumber = '' OR v.registration_number = :registrationNumber)
-          AND (:driverName IS NULL OR :driverName = '' OR cu.customer_name LIKE CONCAT('%', :driverName, '%'))
-        GROUP BY v.registration_number, c.name
-        """,
+    SELECT
+        v.registration_number AS registrationNumber,
+        c.name AS companyName,
+        COUNT(DISTINCT DATE(r.start_at)) AS drivingDays,
+        SUM(r.total_distance) AS totalDistance,
+        AVG(r.total_distance) AS averageDistance,
+        SEC_TO_TIME(AVG(TIMESTAMPDIFF(SECOND, r.start_at, r.end_at))) AS averageDrivingTime
+    FROM route r
+    LEFT JOIN driving_log dl ON r.driving_log_id = dl.id
+    LEFT JOIN rental rent ON dl.rental_id = rent.id
+    LEFT JOIN vehicle v ON rent.vehicle_id = v.id
+    LEFT JOIN company c ON rent.company_id = c.id
+    LEFT JOIN customer cu ON rent.customer_id = cu.id
+    WHERE r.start_at BETWEEN :startDate AND :endDate
+      AND (:registrationNumber IS NULL OR :registrationNumber = '' OR v.registration_number = :registrationNumber)
+      AND (:driverName IS NULL OR :driverName = '' OR rent.customer_id IN (
+            SELECT id FROM customer WHERE customer_name LIKE CONCAT('%', :driverName, '%')
+      ))
+    GROUP BY v.registration_number, c.name
+    """,
         nativeQuery = true
     )
+
     List<VehicleLogSummaryProjection> findVehicleLogSummaryBetween(
         @Param("startDate") LocalDateTime startDate,
         @Param("endDate") LocalDateTime endDate,
