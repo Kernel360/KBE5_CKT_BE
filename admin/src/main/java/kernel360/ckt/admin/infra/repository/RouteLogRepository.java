@@ -1,4 +1,4 @@
-package kernel360.ckt.admin.infra.repository.jpa;
+package kernel360.ckt.admin.infra.repository;
 
 import kernel360.ckt.admin.infra.repository.projection.DailyVehicleLogProjection;
 import kernel360.ckt.admin.infra.repository.projection.VehicleLogSummaryProjection;
@@ -11,7 +11,7 @@ import org.springframework.data.repository.query.Param;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public interface RouteJpaRepository extends Repository<RouteEntity, Long> {
+public interface RouteLogRepository extends Repository<RouteEntity, Long> {
 
     // 차량 운행 통계
     @Query(
