@@ -2,10 +2,13 @@ package kernel360.ckt.admin.ui.dto.request;
 
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotNull;
-import java.time.LocalDateTime;
-import kernel360.ckt.admin.application.service.command.CreateRentalCommand;
+import kernel360.ckt.admin.application.service.command.RentalUpdateCommand;
+import kernel360.ckt.admin.application.service.command.RentalUpdateStatusCommand;
+import kernel360.ckt.core.domain.enums.RentalStatus;
 
-public record RentalCreateRequest(
+import java.time.LocalDateTime;
+
+public record RentalUpdateRequest(
     @NotNull(message = "차량은 필수입니다.")
     Long vehicleId,
 
@@ -22,8 +25,9 @@ public record RentalCreateRequest(
 
     String memo
 ) {
-    public CreateRentalCommand toCommand(Long companyId) {
-        return CreateRentalCommand.create(
+    public RentalUpdateCommand toCommand(Long id, Long companyId) {
+        return RentalUpdateCommand.create(
+            id,
             companyId,
             vehicleId,
             customerId,
