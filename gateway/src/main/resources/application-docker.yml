@@ -41,5 +41,10 @@ spring:
           uri: http://admin:8081
           predicates:
             - Path=/api/v1/tracking/**
+
+        - id: sse
+          uri: http://collector:8090
+          predicates:
+            - Path=/api/v1/sse/**
 cors:
   allowed-origins: http://localhost:5173
